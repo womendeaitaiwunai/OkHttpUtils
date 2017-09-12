@@ -11,6 +11,7 @@ import android.widget.Toast;
 
 import com.loong.okhttp.OkHttpUtils;
 import com.loong.okhttp.callback.BitmapCallback;
+import com.loong.okhttp.callback.GsonCallback;
 import com.loong.okhttp.callback.StringCallback;
 
 import okhttp3.Call;
@@ -25,20 +26,36 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 final ImageView bitmap= (ImageView) findViewById(R.id.bitmap);
-                OkHttpUtils.get().url("http://192.168.0.211:8080/bodycheck/sysuser/photostudio_getHmacRandom.action")
-                        .build().execute(new StringCallback(MainActivity.this) {
-                    @Override
-                    public void onResponse(String response, int id) {
-                        super.onResponse(response, id);
-                        Log.i("自雷","onResponse");
-                    }
+//                OkHttpUtils.get().url("http://192.168.0.211:8080/bodycheck/sysuser/photostudio_getHmacRandom.action")
+//                        .build().execute(new StringCallback(MainActivity.this) {
+//                    @Override
+//                    public void onResponse(String response, int id) {
+//                        super.onResponse(response, id);
+//                        Log.i("自雷","onResponse");
+//                    }
+//
+//                    @Override
+//                    public void onError(Call call, Exception e, int id) {
+//                        super.onError(call, e, id);
+//                        Log.i("自雷","onError");
+//                        startActivity(new Intent(MainActivity.this,Activity1.class));
+//                        finish();
+//                    }
+//                });
 
+                OkHttpUtils.post()
+                        .url("http://www.mrtdephoto.net/sysuser/photostudio_getProvinceCity.action")
+                        .build().execute(new GsonCallback<ProvinceCityDto>(MainActivity.this) {
                     @Override
                     public void onError(Call call, Exception e, int id) {
                         super.onError(call, e, id);
-                        Log.i("自雷","onError");
-                        startActivity(new Intent(MainActivity.this,Activity1.class));
-                        finish();
+                    }
+
+                    @Override
+                    public void onResponse(ProvinceCityDto response, int id) {
+                        super.onResponse(response, id);
+                        Log.i("得到数据",response.getCitys().size()+"");
+                        Log.i("得到数据",response.getProvinces().size()+"");
                     }
                 });
             }
