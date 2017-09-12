@@ -1,6 +1,8 @@
 package com.loong.okhttp.callback;
 
 
+import android.content.Context;
+
 import com.loong.okhttp.OkHttpUtils;
 
 import java.io.File;
@@ -13,7 +15,7 @@ import okhttp3.Response;
 /**
  * Created by zhy on 15/12/15.
  */
-public abstract class FileCallBack extends Callback<File>
+public abstract class FileCallBack extends BaseCallBack<File>
 {
     /**
      * 目标文件存储的文件夹路径
@@ -25,8 +27,8 @@ public abstract class FileCallBack extends Callback<File>
     private String destFileName;
 
 
-    public FileCallBack(String destFileDir, String destFileName)
-    {
+    public FileCallBack(Context context,String destFileDir, String destFileName) {
+        super(context);
         this.destFileDir = destFileDir;
         this.destFileName = destFileName;
     }

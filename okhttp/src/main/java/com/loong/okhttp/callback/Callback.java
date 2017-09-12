@@ -1,5 +1,7 @@
 package com.loong.okhttp.callback;
 
+import com.loong.okhttp.request.RequestCall;
+
 import okhttp3.Call;
 import okhttp3.Request;
 import okhttp3.Response;
@@ -11,8 +13,7 @@ public abstract class Callback<T>
      *
      * @param request
      */
-    public void onBefore(Request request, int id)
-    {
+    public void onBefore(RequestCall requestCall, Request request, int id) {
     }
 
     /**
@@ -20,8 +21,7 @@ public abstract class Callback<T>
      *
      * @param
      */
-    public void onAfter(int id)
-    {
+    public void onAfter(int id) {
     }
 
     /**
@@ -29,8 +29,7 @@ public abstract class Callback<T>
      *
      * @param progress
      */
-    public void inProgress(float progress, long total , int id)
-    {
+    public void inProgress(float progress, long total , int id) {
 
     }
 

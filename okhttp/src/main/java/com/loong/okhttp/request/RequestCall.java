@@ -86,10 +86,10 @@ public class RequestCall
 
         if (callback != null)
         {
-            callback.onBefore(request, getOkHttpRequest().getId());
+            callback.onBefore(this,request, getOkHttpRequest().getId());
         }
 
-        OkHttpUtils.getInstance().execute(this, callback);
+        if (getCall()!=null) OkHttpUtils.getInstance().execute(this, callback);
     }
 
     public Call getCall()
