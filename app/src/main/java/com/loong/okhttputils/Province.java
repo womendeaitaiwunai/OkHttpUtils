@@ -120,4 +120,15 @@ public class Province implements java.io.Serializable {
 		return result;
 	}
 
+
+	@Override
+	public String toString() {
+		return "Province{" +
+				"id=" + id +
+				", provinceId=" + provinceId +
+				", nationId=" + nationId +
+				", provinceName='" + provinceName + '\'' +
+				", back='" + back + '\'' +
+				'}';
+	}
 }

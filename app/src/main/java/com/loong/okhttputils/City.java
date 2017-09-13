@@ -118,4 +118,14 @@ public class City implements java.io.Serializable {
 		return result;
 	}
 
+	@Override
+	public String toString() {
+		return "City{" +
+				"id=" + id +
+				", cityId=" + cityId +
+				", provinceId=" + provinceId +
+				", cityName='" + cityName + '\'' +
+				", back='" + back + '\'' +
+				'}';
+	}
 }

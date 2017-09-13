@@ -3,6 +3,7 @@ package com.loong.okhttp.callback;
 import android.content.Context;
 
 import com.google.gson.Gson;
+import com.google.gson.JsonIOException;
 
 import java.lang.reflect.ParameterizedType;
 
@@ -19,9 +20,24 @@ public abstract class GsonCallback<T> extends BaseCallBack<T> {
     }
     @Override
     public T parseNetworkResponse(Response response, int id) throws Exception {
-        Gson gson=new Gson();
-        Class<T> tClass= (Class <T>) ((ParameterizedType) getClass().getGenericSuperclass()).getActualTypeArguments()[0];
-        return gson.fromJson(response.body().string(),tClass);
+        try {
+            Gson gson=new Gson();
+            Class<T> tClass= (Class <T>) ((ParameterizedType) getClass().getGenericSuperclass()).getActualTypeArguments()[0];
+            return gson.fromJson(response.body().string(),tClass);
+        }catch (Exception e){
+            onError(null,new Exception("gson error"),id);
+            return null;
+        }
+
     }
 
+    @Override
+    public void onError(Call call, Exception e, int id) {
+        super.onError(call, e, id);
+    }
+
+    @Override
+    public void onResponse(T response, int id) {
+        super.onResponse(response, id);
+    }
 }

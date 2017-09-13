@@ -3,6 +3,7 @@ package com.loong.okhttp.callback;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.text.TextUtils;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -25,19 +26,19 @@ public abstract class BaseCallBack<T> extends Callback<T> {
         contextWR=new WeakReference<>(context);
     }
 
-    public BaseCallBack setShowDialog(boolean showDialog){
-        this.showDialog=showDialog;
-        return this;
+    public boolean setShowDialog(){
+        return true;
     }
 
-    public BaseCallBack setProgressDialog(ProgressDialog progressDialog){
-        this.progressDialog=progressDialog;
-        return this;
+    public ProgressDialog setProgressDialog(){
+        return progressDialog;
     }
 
 
     @Override
     public void onBefore(final RequestCall requestCall, Request request, final int id) {
+        showDialog=setShowDialog();
+        progressDialog=setProgressDialog();
         if (showDialog){
             if (contextWR!=null&&contextWR.get()!=null){
                 if (progressDialog==null){
@@ -66,19 +67,19 @@ public abstract class BaseCallBack<T> extends Callback<T> {
 
     @Override
     public void onError(Call call, Exception e, int id) {
-        Log.i("负累","onError");
         e.printStackTrace();
         if (e instanceof java.net.SocketTimeoutException){
             if (contextWR.get()!=null)Toast.makeText(contextWR.get(), "请求超时.请检查网络..", Toast.LENGTH_SHORT).show();
-        }if (e.getMessage().equals("net cancel")){
+        }else if (TextUtils.equals(e.getMessage(),"net cancel")){
             if (contextWR.get()!=null)Toast.makeText(contextWR.get(), "请求被取消...", Toast.LENGTH_SHORT).show();
+        }else if (TextUtils.equals(e.getMessage(),"gson error")){
+            if (contextWR.get()!=null)Toast.makeText(contextWR.get(), "返回数据转换错误...", Toast.LENGTH_SHORT).show();
         }
         hideProgressDialog();
     }
 
     @Override
     public void onResponse(T response, int id) {
-        Log.i("负累","onResponse");
         hideProgressDialog();
     }
 

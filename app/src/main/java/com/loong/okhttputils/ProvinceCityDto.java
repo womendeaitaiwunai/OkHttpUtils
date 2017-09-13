@@ -31,4 +31,28 @@ public class ProvinceCityDto {
 	public void setProvinces(List<Province> provinces) {
 		this.provinces = provinces;
 	}
+
+	@Override
+	public String toString() {
+		return "ProvinceCityDto{" +
+				"citys=" + getCity() +
+				", provinces=" + getProvince() +
+				'}';
+	}
+
+	private String getCity(){
+		String re = "";
+		for (int i = 0; i < citys.size(); i++) {
+			re=re+(citys.get(i).toString());
+		}
+		return "["+re+"],";
+	}
+
+	private String getProvince(){
+		String re = "";
+		for (int i = 0; i < provinces.size(); i++) {
+			re=re+(provinces.get(i).toString());
+		}
+		return "["+re+"],";
+	}
 }
